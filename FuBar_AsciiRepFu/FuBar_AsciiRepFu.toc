@@ -1,0 +1,12 @@
+## Interface: 20400
+## Title: FuBar - |cffffffffAsciiRep|cff00ff00Fu|r
+## Notes: Displays a configurable ASCII reputation bar for FuBar.
+## Author: Siarkowy
+## OptionalDeps: Ace2, FuBarPlugin-2.0, DewdropLib, TabletLib
+## SavedVariables: AsciiRepFuDB
+## Version: 1.1
+## X-Category: Interface Enhancements
+## X-License: BSD-2.0
+## X-Embeds: Ace2, FuBarPlugin-2.0, DewdropLib, TabletLib
+
+repfu.lua
