@@ -3,7 +3,7 @@
 -- Released under the terms of BSD-2.0 license.
 --------------------------------------------------------------------------------
 
--- Ace2 and FuBar stuff -t
+-- Ace2 and FuBar stuff
 
 AsciiRepFu = AceLibrary("AceAddon-2.0"):new(
     "AceDB-2.0",
