@@ -4,7 +4,7 @@
 ## Author: Siarkowy
 ## OptionalDeps: Ace2, FuBarPlugin-2.0, DewdropLib, TabletLib
 ## SavedVariables: AsciiRepFuDB
-## Version: 1.1
+## Version: 1.2
 ## X-Category: Interface Enhancements
 ## X-License: BSD-2.0
 ## X-Embeds: Ace2, FuBarPlugin-2.0, DewdropLib, TabletLib
