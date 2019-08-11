@@ -54,7 +54,7 @@ function Rep:OnInitialize()
         barLength = 40,
         char = "||",
         format = "%n: %s %b %c / %M (%p)",
-        long = false,
+        long = true,
     })
 end
 
@@ -258,7 +258,7 @@ Rep.OnMenuRequest = {
             order = 3
         },
         long = {
-            name = "Extended view",
+            name = "Show factions",
             desc = "Display faction list with standings",
             type = "toggle",
             get = function()
