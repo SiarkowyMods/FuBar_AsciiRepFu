@@ -245,6 +245,11 @@ end
 Rep.OnMenuRequest = {
     type = "group",
     args = {
+        barSettings = {
+            type = "header",
+            name = "Bar Settings",
+            order = 10
+        },
         char = {
             name = "Character",
             desc = "Character from which to compose reputation indicator bar",
@@ -257,10 +262,10 @@ Rep.OnMenuRequest = {
                 Rep.db.profile.char = v
                 Rep:Update()
             end,
-            order = 1
+            order = 11
         },
         length = {
-            name = "Bar length",
+            name = "Length",
             desc = "Sets reputation indicator bar length",
             usage = "<number>",
             type = "range",
@@ -274,7 +279,7 @@ Rep.OnMenuRequest = {
                 Rep.db.profile.barLength = v
                 Rep:Update()
             end,
-            order = 2
+            order = 12
         },
         format = {
             name = "Format",
@@ -299,7 +304,7 @@ Rep.OnMenuRequest = {
                 Rep.db.profile.format = v
                 Rep:Update()
             end,
-            order = 3
+            order = 13
         },
         long = {
             name = "Show factions",
@@ -312,7 +317,7 @@ Rep.OnMenuRequest = {
                 Rep.db.profile.long = v
                 Rep:Update()
             end,
-            order = 4
+            order = 1
         },
         alts = {
             name = "Show alts",
