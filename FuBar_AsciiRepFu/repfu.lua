@@ -55,7 +55,13 @@ function Rep:OnInitialize()
         char = "||",
         format = "%n: %s %b %c / %M (%p)",
         long = true,
+        showAlts = true,
+        watchedFactions = {
+            ['*'] = {}
+        }
     })
+
+    self.player = UnitName("player")
 end
 
 function Rep:ExpandFactionHeaders()
@@ -102,8 +108,23 @@ function Rep:OnClick()
 end
 
 function Rep:OnDataUpdate()
+    self:SaveWatchedFaction()
     if standings then return end
     self:SaveStandings()
+end
+
+function Rep:SaveWatchedFaction()
+    local name, standing, min, max, value = GetWatchedFactionInfo()
+    if not name then
+        return
+    end
+
+    local data = self.db.profile.watchedFactions[self.player]
+    data.name = name
+    data.standing = standing
+    data.min = min
+    data.max = max
+    data.value = value
 end
 
 do
@@ -176,24 +197,47 @@ function Rep:OnTooltipUpdate()
         cat:AddLine('text', "Quotient", 'text2', q > 1000 and "1000+" or format("%.1f", q))
     end
 
-    if not self.db.profile.long and not IsControlKeyDown() then
-        return
-    end
+    if self.db.profile.long or IsControlKeyDown() then
+        for i = 1, GetNumFactions() do
+            local name, _, standing, _, _, value, _, _, isHeader = GetFactionInfo(i)
 
-    for i = 1, GetNumFactions() do
-        local name, _, standing, _, _, value, _, _, isHeader = GetFactionInfo(i)
-
-        if isHeader then
-            cat = tablet:AddCategory('columns', 2, 'text', name)
-        else
-            cat:AddLine(
-                'text', name,
-                'text2', format("|cff%s%s|r", repcolors[standing], getglobal("FACTION_STANDING_LABEL" .. standing)),
-                'func', SetWatchedFactionIndex,
-                'arg1', i
-            )
+            if isHeader then
+                cat = tablet:AddCategory('columns', 2, 'text', name)
+            else
+                cat:AddLine(
+                    'text', name,
+                    'text2', format("|cff%s%s|r", repcolors[standing], getglobal("FACTION_STANDING_LABEL" .. standing)),
+                    'func', SetWatchedFactionIndex,
+                    'arg1', i
+                )
+            end
         end
     end
+
+    if self.db.profile.showAlts and self:HasAlts() then
+        cat = tablet:AddCategory('columns', 2, 'text', 'Char Overview')
+
+        for name, info in pairs(self.db.profile.watchedFactions) do
+            if name ~= self.player then
+                cat:AddLine(
+                    'text', format("%s - %s", name, info.name),
+                    'text2', format("|cff%s%s|r", repcolors[info.standing], getglobal("FACTION_STANDING_LABEL" .. info.standing)),
+                    'func', SetWatchedFactionIndex,
+                    'arg1', i
+                )
+            end
+        end
+    end
+end
+
+function Rep:HasAlts()
+    for name, _ in pairs(self.db.profile.watchedFactions) do
+        if name ~= self.player then
+            return true
+        end
+    end
+
+    return false
 end
 
 -- Dropdown menu stuff
@@ -269,6 +313,33 @@ Rep.OnMenuRequest = {
                 Rep:Update()
             end,
             order = 4
+        },
+        alts = {
+            name = "Show alts",
+            desc = "Display watched faction info for other characters",
+            type = "toggle",
+            get = function()
+                return Rep.db.profile.showAlts
+            end,
+            set = function(v)
+                Rep.db.profile.showAlts = v
+                Rep:Update()
+            end,
+            order = 5
+        },
+        delalt = {
+            name = "Delete alt",
+            desc = "Clears specified name from Char Overview",
+            usage = "<character>",
+            type = "text",
+            get = function()
+                return ""
+            end,
+            set = function(v)
+                Rep.db.profile.watchedFactions[v] = nil
+                Rep:Update()
+            end,
+            order = 6
         },
     }
 }
