@@ -13,6 +13,7 @@ AsciiRepFu = AceLibrary("AceAddon-2.0"):new(
 
 local Rep = AsciiRepFu
 Rep.hasNoColor = true
+Rep.clickableTooltip = true
 Rep.defaultMinimapPosition = 180
 Rep.hasIcon = UnitFactionGroup("player") == "Horde"
     and [[Interface\Icons\INV_BannerPVP_01]]
