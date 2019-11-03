@@ -203,7 +203,7 @@ function Rep:OnTooltipUpdate()
             local name, _, standing, _, _, value, _, _, isHeader = GetFactionInfo(i)
 
             if isHeader then
-                cat = tablet:AddCategory('columns', 2, 'text', name)
+                cat = tablet:AddCategory('columns', 2, 'text', name, 'hideBlankLine', i ~= 1)
             else
                 cat:AddLine(
                     'text', name,
