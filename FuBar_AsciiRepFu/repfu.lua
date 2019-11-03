@@ -208,6 +208,8 @@ function Rep:OnTooltipUpdate()
                 cat:AddLine(
                     'text', name,
                     'text2', format("|cff%s%s|r", repcolors[standing], getglobal("FACTION_STANDING_LABEL" .. standing)),
+                    'hasCheck', true,
+                    'checked', GetWatchedFactionInfo() == name,
                     'func', SetWatchedFactionIndex,
                     'arg1', i
                 )
@@ -223,8 +225,8 @@ function Rep:OnTooltipUpdate()
                 cat:AddLine(
                     'text', format("%s - %s", name, info.name),
                     'text2', format("|cff%s%s|r", repcolors[info.standing], getglobal("FACTION_STANDING_LABEL" .. info.standing)),
-                    'func', SetWatchedFactionIndex,
-                    'arg1', i
+                    'hasCheck', true,
+                    'checked', false
                 )
             end
         end
